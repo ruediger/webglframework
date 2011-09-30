@@ -1,0 +1,13 @@
+# -*- mode:org; mode:visual-line; coding:utf-8 -*-
+#+TITLE: WebGL Framework
+#+AUTHOR: Rüdiger Sonderfeld
+#+EMAIL: ruediger@c-plusplus.de
+
+This is a small framework containing the basic boilerplate code I find myself copying for all my WebGL experiments. The code is based and copied from the [[https://developer.mozilla.org/en/WebGL][WebGL tutorial from MDN]] and uses the [[http://sylvester.jcoglan.com/][Sylvester Matrix/Vector library]]. The Framework is very simple and not a full engine or even particularly nice designed. I will improve and change it as my needs require.
+
+* WebGL Ressources
+
+- [[https://developer.mozilla.org/en/WebGL][Mozilla Developer Network (MDN): WebGL]] (the Framework is based on this Tutorial)
+- [[https://www.khronos.org/registry/webgl/specs/1.0/][WebGL 1.0 Specification]]
+- [[http://www.khronos.org/webgl/][Khronos WebGL website]]
+- [[http://benvanik.github.com/WebGL-Inspector/][WebGL Inspector]] - a debugging toolkit for WebGL. Sadly no Firefox support, yet (only works with Chrome/Safari).
