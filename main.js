@@ -6,61 +6,6 @@ var width;
 var height;
 var gl = null;
 
-// copied from MDN
-var perspectiveMatrix;
-var mvMatrix;
-
-function loadIdentity() {
-  mvMatrix = Matrix.I(4);
-}
-
-function multMatrix(m) {
-  mvMatrix = mvMatrix.x(m);
-}
-
-function mvTranslate(v) {
-  multMatrix($M([ [1.0, 0, 0, v[0]],
-                  [0, 1.0, 0, v[1]],
-                  [0, 0, 1.0, v[2]],
-                  [0, 0, 0,   1.0 ]]));
-}
-
-function setMatrixUniforms() {
-  var pUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
-  gl.uniformMatrix4fv(pUniform, false, new Float32Array(perspectiveMatrix.flatten()));
-
-  var mvUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
-  gl.uniformMatrix4fv(mvUniform, false, new Float32Array(mvMatrix.flatten()));
-}
-
-var mvMatrixStack = [];
-
-function mvPushMatrix(m) {
-  if (m) {
-    mvMatrixStack.push(m.dup());
-    mvMatrix = m.dup();
-  } else {
-    mvMatrixStack.push(mvMatrix.dup());
-  }
-}
-
-function mvPopMatrix() {
-  if (!mvMatrixStack.length) {
-    throw("Can't pop from an empty matrix stack.");
-  }
-  
-  mvMatrix = mvMatrixStack.pop();
-  return mvMatrix;
-}
-
-function mvRotate(angle, v) {
-  var inRadians = angle * Math.PI / 180.0;
-  
-  var m = Matrix.Rotation(inRadians, $V([v[0], v[1], v[2]])).ensure4x4();
-  multMatrix(m);
-}
-// end
-
 function createVerticesBuffer(vertices) {
   var buf = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -79,9 +24,14 @@ function draw(timestamp) {
   var time = timestamp || Date.now();
   var delta = time - animation_start_time; // see comp.js
 
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  perspectiveMatrix = mat4.perspective(45, width/height, 0.1, 100.0);
+  loadIdentity();
+
   // ...
 
   animation_start_time = time;
+  requestAnimFrame(draw);
 }
 
 function start() {
